@@ -20,3 +20,15 @@ function entropy (dataset) {
 
   return entropy
 }
+
+function splitDataset (dataset, attributeIndex, attributeValue) {
+  let newDataset = []
+  dataset.forEach( data => {
+    if (data[attributeIndex] === attributeValue) {
+      let newData = data
+        .filter( data => data !== attributeValue)
+      newDataset.push(newData)
+    }
+  })
+  return newDataset
+}
