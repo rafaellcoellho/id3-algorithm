@@ -14,3 +14,5 @@ const datasetExample = [
   ['overcast','hot','normal','weak','yes'],
   ['rain','mild','high','strong','no']
 ]
+
+const attributeNames = ['outlook', 'temp', 'humidity', 'wind', 'decision']

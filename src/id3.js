@@ -32,3 +32,39 @@ function splitDataset (dataset, attributeIndex, attributeValue) {
   })
   return newDataset
 }
+
+function attributeSelection (dataset) {
+  const numberOfAttributes = dataset[0].length-1
+  const baseEntropy = entropy(dataset)
+  let greaterInformationGain = 0.0
+  let bestAttr
+
+
+  for (let i=0; i < numberOfAttributes; i++) {
+    let labelsOfAttribute = {}
+    
+    dataset.forEach( data => {
+      const label = data[i]
+      if (!labelsOfAttribute.hasOwnProperty(label)) {
+        labelsOfAttribute[label] = 1;
+      } 
+    })
+
+    let attrEntropy = 0.0
+
+    Object.keys(labelsOfAttribute).forEach(label => {
+      const newData = splitDataset(dataset, i, label)
+      const prob = newData.length / dataset.length
+      const newEntropy = prob * entropy(newData)
+      attrEntropy += newEntropy
+    })
+    
+    const informationGain = baseEntropy - attrEntropy
+    if (informationGain > greaterInformationGain) {
+      greaterInformationGain = informationGain
+      bestAttr = i
+    }
+  }
+
+  return bestAttr
+} 
