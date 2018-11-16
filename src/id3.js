@@ -87,7 +87,8 @@ function id3(dataset, labels) {
 
   let theTree = {}
   theTree[treeLabel] = {}
-  delete labels[maxGainNode]
+  const subLabels = labels
+    .filter(label => label !== labels[maxGainNode])
 
   let labelsOfAttribute = {}
   dataset.forEach(data => {
@@ -98,7 +99,6 @@ function id3(dataset, labels) {
   })
 
   Object.keys(labelsOfAttribute).forEach(label => {
-    const subLabels = labels
     theTree[treeLabel][label] = id3(splitDataset(dataset, maxGainNode, label), subLabels)
   })
 
