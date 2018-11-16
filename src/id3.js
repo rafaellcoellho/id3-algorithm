@@ -39,7 +39,6 @@ function attributeSelection (dataset) {
   let greaterInformationGain = 0.0
   let bestAttr
 
-
   for (let i=0; i < numberOfAttributes; i++) {
     let labelsOfAttribute = {}
     
@@ -68,3 +67,40 @@ function attributeSelection (dataset) {
 
   return bestAttr
 } 
+
+function id3 (dataset, labels) {
+  const totalResultLabels = dataset
+    .map(data => data[data.length-1])
+    .length 
+
+  const equalResultLabels = dataset
+    .map(data => data[data.length-1])
+    .filter(data => dataset[0][dataset[0].length-1] === data)
+    .length
+
+  if (totalResultLabels === equalResultLabels) {
+    return dataset[0][dataset[0].length-1]
+  }
+
+  const maxGainNode = attributeSelection(dataset)
+  const treeLabel = labels[maxGainNode]
+
+  let theTree = {}
+  theTree[treeLabel] = {}
+  delete labels[maxGainNode]
+  
+  let labelsOfAttribute = {}  
+  dataset.forEach( data => {
+    const label = data[maxGainNode]
+    if (!labelsOfAttribute.hasOwnProperty(label)) {
+      labelsOfAttribute[label] = 1;
+    } 
+  })
+
+  Object.keys(labelsOfAttribute).forEach(label => {
+    const subLabels = labels
+    theTree[treeLabel][label] = id3(splitDataset(dataset, maxGainNode, label), subLabels)
+  })
+
+  return theTree
+}
