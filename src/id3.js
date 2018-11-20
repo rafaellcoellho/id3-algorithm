@@ -99,8 +99,8 @@ function id3(dataset, labels) {
   })
 
   Object.keys(labelsOfAttribute).forEach(label => {
-    theTree[treeLabel][label] = id3(splitDataset(dataset, maxGainNode, label), subLabels)
+    theTree[treeLabel][label] = {child:id3(splitDataset(dataset, maxGainNode, label), subLabels, treeLabel), parente:treeLabel}
   })
 
-  return theTree
+  return {child:theTree,parente:treeLabel}
 }
