@@ -12,10 +12,3 @@ and natural language processing domains.
 ## How to run
 
 Just click in index.html in src folder
-
-<p align="center">
-	<a href="">
-		<img alt="screenshot" src="./screenshot.png" width="1000px">
-	</a>
-</p>
-
